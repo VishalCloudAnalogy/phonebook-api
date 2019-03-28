@@ -1,0 +1,47 @@
+<div nz-row nzType="flex" nzJustify="center" style="margin-top:30px;margin-bottom: 30px ">
+  <div nz-col nzSpan="14">
+    <h1 style="text-align: center;">Phone Book - API </h1>
+    <hr style="margin-bottom: 3%; width: 80%">
+    <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="submitForm()" style="margin: auto; text-align: center">
+      <nz-form-item>
+        <nz-form-control>
+          <nz-input-group [nzPrefix]="prefixUser">
+            <input formControlName="name" nz-input placeholder="name" />
+          </nz-input-group>
+          <nz-form-explain *ngIf="validateForm.get('name')?.dirty && validateForm.get('name')?.errors"
+          >Please input your name!</nz-form-explain
+          >
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <nz-input-group [nzPrefix]="prefixLock">
+            <input formControlName="phone" nz-input type="text" placeholder="phone" />
+          </nz-input-group>
+          <nz-form-explain *ngIf="validateForm.get('phone')?.dirty && validateForm.get('phone')?.errors"
+          >Please input your phone!</nz-form-explain
+          >
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <button nz-button nzType="primary" [disabled]="!validateForm.valid">{{button_status ? 'Update': 'Add'}} Phone-Book</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+    <ng-template #prefixUser><i nz-icon type="user"></i></ng-template>
+    <ng-template #prefixLock><i nz-icon nzType="mobile" nzTheme="outline"></i></ng-template>
+  </div>
+
+  <div nz-col nzSpan="14" style="margin-top: 5%">
+    <nz-card style="width:80%;margin: auto;" *ngFor="let phoneBook of phoneBookList; let i =index">
+      <div nz-row>
+        <div nz-col nzSpan="12"><p> <strong>{{phoneBook.name}}</strong> , {{phoneBook.phone}}</p></div>
+        <div nz-col nzSpan="12">
+          <i nz-icon nzType="delete" nzTheme="outline" style="float: right; cursor: pointer"  (click)="onDelete(phoneBook.id)" nzTitle="Delete" nz-tooltip></i>
+          <i nz-icon nzType="edit" nzTheme="outline" style="float: right;margin-right: 5%; cursor: pointer"(click)="onUpdate(phoneBook)" nzTitle="Edit" nz-tooltip></i>
+        </div>
+      </div>
+    </nz-card>
+  </div>
+</div>
